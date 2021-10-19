@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package upload;
+
+option go_package = ".;pb";
+
+message UploadRequest{
+    oneof Data{
+        bytes file = 1;
+        FileInfo fileInfo = 2;
+    }
+}
+
+message FileInfo{
+    string filePath = 1;
+    string fileExt = 2;
+}
+
+message UploadResponse{
+    string savePath = 1;
+}
+
+service BaseUpload{
+    rpc Upload(stream UploadRequest) returns (UploadResponse);
+}
